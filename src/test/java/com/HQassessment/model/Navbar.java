@@ -3,6 +3,10 @@ package com.HQassessment.model;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Navbar {
 
@@ -20,6 +24,26 @@ public class Navbar {
 
     public void clickProfileIcon() {
         driver.findElement((By.className("nav-profile"))).click();
+
+    }
+
+    public void clickProfileLogout() {
+        Actions action = new Actions(driver);
+        WebElement profileIcon = driver.findElement((By.className("nav-profile")));
+        action.moveToElement(profileIcon).perform();
+        new WebDriverWait(driver , 3).until(ExpectedConditions.visibilityOfElementLocated((By.className("dd-nav-logout"))));
+        driver.findElement(By.className("dd-nav-logout")).click();
+
+        new WebDriverWait(driver , 3).until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[aria-label=yes]")));
+        driver.findElement(By.cssSelector("[aria-label=yes]")).click();
+
+
+    }
+
+    public String openProfileScreen(String profileScreenUrl) {
+
+        driver.get(profileScreenUrl);
+        return driver.getCurrentUrl();
 
     }
 }

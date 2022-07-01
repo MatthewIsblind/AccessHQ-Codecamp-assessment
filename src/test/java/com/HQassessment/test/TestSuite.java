@@ -19,7 +19,7 @@ public class TestSuite {
     public void Setup(){
         driver = new ChromeDriver();
 
-        driver.get("https://d2dx8jn5qmn998.cloudfront.net/#/");
+        driver.get("https://d2tjwct0w5ff76.cloudfront.net/#/");
         driver.manage().window().maximize();
 
     }
@@ -40,8 +40,29 @@ public class TestSuite {
 
     }
 
-//    @AfterEach
-//    public void TearDown() {
-//        driver.quit();
-//    }
+    @Test
+    public void RedircetToHomePageTest(){
+        //should refactor this since its repeating the login steps in the preious test
+        Navbar navbar = new Navbar(driver);
+        navbar.openLoginForm();
+
+        LoginForm loginForm = new LoginForm(driver);
+        loginForm.fillUsernameField("bob");
+        loginForm.fillPasswordField("ilovepizza");
+        loginForm.clickLoginButton();
+
+        navbar.clickProfileIcon();
+
+        String profilePageUrl = driver.getCurrentUrl();
+        navbar.clickProfileLogout();
+
+        Assertions.assertEquals(navbar.openProfileScreen(profilePageUrl), "https://d2tjwct0w5ff76.cloudfront.net/#/");
+
+
+    }
+
+    @AfterEach
+    public void TearDown() {
+        driver.quit();
+    }
 }
