@@ -3,6 +3,7 @@ package com.HQassessment.test;
 import com.HQassessment.model.HomePage;
 import com.HQassessment.model.LoginForm;
 import com.HQassessment.model.Navbar;
+import com.HQassessment.model.ProfilePage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ public class TestSuite {
 
         navbar.clickProfileIcon();
 
-        //Assertions.assertEquals("Welcome bob");
+        Assertions.assertEquals("Welcome bob", new ProfilePage(driver).getHeaderText());
 
     }
 
