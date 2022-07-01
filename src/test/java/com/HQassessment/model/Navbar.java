@@ -8,6 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.function.Predicate;
+
 public class Navbar {
 
     private final WebDriver driver;
@@ -45,5 +47,15 @@ public class Navbar {
         driver.get(profileScreenUrl);
         return driver.getCurrentUrl();
 
+    }
+
+    public void openMenuPage() {
+        driver.findElement(By.cssSelector("[aria-label=menu]")).click();
+    }
+
+
+    public int getProductCount() {
+        String numtext =  driver.findElement(By.className("v-chip")).findElement(By.className("order-count")).getText();
+        return Integer.parseInt(numtext);
     }
 }

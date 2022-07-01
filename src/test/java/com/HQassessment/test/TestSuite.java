@@ -1,13 +1,11 @@
 package com.HQassessment.test;
 
-import com.HQassessment.model.HomePage;
-import com.HQassessment.model.LoginForm;
-import com.HQassessment.model.Navbar;
-import com.HQassessment.model.ProfilePage;
+import com.HQassessment.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -42,7 +40,7 @@ public class TestSuite {
 
     @Test
     public void RedircetToHomePageTest(){
-        //should refactor this since its repeating the login steps in the preious test
+        //It shows the steps the test go through but it should refactor this since its repeating the login steps in the preivous test
         Navbar navbar = new Navbar(driver);
         navbar.openLoginForm();
 
@@ -60,6 +58,24 @@ public class TestSuite {
 
 
     }
+
+    @Test
+    public void OrderEsperssoThickshakeAndPizzaProductCountTest() {
+        Navbar navbar = new Navbar(driver);
+        navbar.openMenuPage();
+
+
+        ProductPage productPage = new ProductPage(driver);
+        //the argument for this could be better. Didn't know how to properly access the text
+        productPage.navigateMenuTab(p -> p.equalsIgnoreCase("local_drink"));
+        productPage.orderItem("Espresso ThickShake",1, By.className("drink"));
+
+        productPage.navigateMenuTab(p -> p.equalsIgnoreCase("local_pizza"));
+        productPage.orderItem("Margherita",2,By.className("pizza"));
+
+        Assertions.assertEquals(3,navbar.getProductCount());
+    }
+
 
     @AfterEach
     public void TearDown() {
